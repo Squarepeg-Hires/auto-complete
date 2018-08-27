@@ -53,6 +53,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges, Aft
     private dropdownJustHidden;
     private scheduledBlurHandler;
     private documentClickListener;
+    private filterClicked;
     constructor(resolver: ComponentFactoryResolver, viewContainerRef: ViewContainerRef, parentForm: ControlContainer);
     ngOnInit(): void;
     ngAfterViewInit(): void;
@@ -71,4 +72,5 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges, Aft
     private keydownEventHandler;
     private inputEventHandler;
     private renderValue(item);
+    private focusInput();
 }

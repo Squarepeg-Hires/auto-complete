@@ -25,7 +25,6 @@ var NguiAutoCompleteDirective = /** @class */ (function () {
         this.reFocusAfterSelect = true;
         this.headerItemTemplate = null;
         this.ignoreAccents = true;
-        this.filters = [];
         this.zIndex = '1';
         this.isRtl = false;
         this.ngModelChange = new core_1.EventEmitter();
@@ -65,7 +64,7 @@ var NguiAutoCompleteDirective = /** @class */ (function () {
             component.autoSelectFirstItem = _this.autoSelectFirstItem;
             component.headerItemTemplate = _this.headerItemTemplate;
             component.ignoreAccents = _this.ignoreAccents;
-            component.filters = _this.filters;
+            component.filters = _this.filters || [];
             component.valueSelected.subscribe(_this.selectNewValue);
             component.textEntered.subscribe(_this.enterNewText);
             component.customSelected.subscribe(_this.selectCustomValue);
@@ -145,30 +144,16 @@ var NguiAutoCompleteDirective = /** @class */ (function () {
             }
             _this.valueChanged.emit(val);
             _this.hideAutoCompleteDropdown();
-            setTimeout(function () {
-                if (_this.reFocusAfterSelect) {
-                    _this.inputEl.focus();
-                }
-                return _this.inputEl;
-            });
+            _this.focusInput();
         };
         this.filterSelected = function (text) {
-            setTimeout(function () {
-                if (_this.reFocusAfterSelect) {
-                    _this.inputEl.focus();
-                }
-                return _this.inputEl;
-            });
+            _this.filterClicked = true;
+            _this.focusInput();
         };
         this.selectCustomValue = function (text) {
             _this.customSelected.emit(text);
             _this.hideAutoCompleteDropdown();
-            setTimeout(function () {
-                if (_this.reFocusAfterSelect) {
-                    _this.inputEl.focus();
-                }
-                return _this.inputEl;
-            });
+            _this.focusInput();
         };
         this.enterNewText = function (value) {
             _this.renderValue(value);
@@ -284,9 +269,10 @@ var NguiAutoCompleteDirective = /** @class */ (function () {
             if (this.selectOnBlur) {
                 component.selectOne(component.filteredList[component.itemIndex]);
             }
-            if (this.closeOnFocusOut) {
+            if (this.closeOnFocusOut && !this.filterClicked) {
                 this.hideAutoCompleteDropdown(event);
             }
+            this.filterClicked = false;
         }
     };
     NguiAutoCompleteDirective.prototype.setToStringFunction = function (item) {
@@ -322,6 +308,15 @@ var NguiAutoCompleteDirective = /** @class */ (function () {
         if (!!this.inputEl) {
             this.inputEl.value = '' + item;
         }
+    };
+    NguiAutoCompleteDirective.prototype.focusInput = function () {
+        var _this = this;
+        setTimeout(function () {
+            if (_this.reFocusAfterSelect) {
+                _this.inputEl.focus();
+            }
+            return _this.inputEl;
+        });
     };
     NguiAutoCompleteDirective.decorators = [
         { type: core_1.Directive, args: [{

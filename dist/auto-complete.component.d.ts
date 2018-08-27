@@ -72,7 +72,7 @@ export declare class NguiAutoCompleteComponent implements OnInit {
     onEnterPressed(): void;
     scrollToView(index: any): void;
     trackByIndex(index: any, item: any): any;
-    onFilterChange(): void;
+    onFilterChange(): boolean;
     onFilterClicked(filter: AutoCompleteFilter): void;
     readonly emptyList: boolean;
 }
