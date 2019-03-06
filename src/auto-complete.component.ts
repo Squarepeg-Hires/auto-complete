@@ -50,10 +50,13 @@ import { AutoCompleteFilter } from './auto-complete.filter';
                 <li *ngIf="isLoading && loadingTemplate" class="loading"
                     [innerHTML]="loadingTemplate"></li>
                 <li *ngIf="isLoading && !loadingTemplate" class="loading">{{loadingText}}</li>
-                <li *ngIf="minCharsEntered && !isLoading && !filteredList.length"
+                <li *ngIf="minCharsEntered && !isLoading && !filteredList.length && !noMatchFoundTemplate"
                     (mousedown)="selectOne('')"
                     class="no-match-found">{{noMatchFoundText || 'No Result Found'}}
                 </li>
+                <li *ngIf="minCharsEntered && !isLoading && !filteredList.length && noMatchFoundTemplate"
+                    class="no-match-found"
+                    [innerHTML]="noMatchFoundTemplate"></li>
                 <li *ngIf="blankOptionText && filteredList.length"
                     (mousedown)="selectOne('')"
                     class="blank-item">{{blankOptionText}}
@@ -149,6 +152,7 @@ export class NguiAutoCompleteComponent implements OnInit {
     @Input('placeholder') public placeholder: string;
     @Input('blank-option-text') public blankOptionText: string;
     @Input('no-match-found-text') public noMatchFoundText: string;
+    @Input('no-match-found-template') public noMatchFoundTemplate: string;
     @Input('accept-user-input') public acceptUserInput: boolean = true;
     @Input('loading-text') public loadingText: string = 'Loading';
     @Input('loading-template') public loadingTemplate = null;

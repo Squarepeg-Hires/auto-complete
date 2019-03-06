@@ -28,6 +28,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
     @Input('loading-text') public loadingText: string = 'Loading';
     @Input('blank-option-text') public blankOptionText: string;
     @Input('no-match-found-text') public noMatchFoundText: string;
+    @Input('no-match-found-template') public noMatchFoundTemplate = null;
     @Input('value-formatter') public valueFormatter: any;
     @Input('tab-to-select') public tabToSelect: boolean = true;
     @Input('select-on-blur') public selectOnBlur: boolean = false;
@@ -196,6 +197,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
         component.listFormatter = this.listFormatter;
         component.blankOptionText = this.blankOptionText;
         component.noMatchFoundText = this.noMatchFoundText;
+        component.noMatchFoundTemplate = this.noMatchFoundTemplate;
         component.tabToSelect = this.tabToSelect;
         component.selectOnBlur = this.selectOnBlur;
         component.matchFormatted = this.matchFormatted;
