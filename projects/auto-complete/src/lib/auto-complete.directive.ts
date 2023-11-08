@@ -9,10 +9,10 @@ import {
   OnInit, Optional,
   Output, SimpleChanges, SkipSelf, ViewContainerRef
 } from '@angular/core';
-import { AbstractControl, ControlContainer, FormControl, FormGroup, FormGroupName } from '@angular/forms';
+import { AbstractControl, ControlContainer, FormGroup, FormGroupName } from '@angular/forms';
 import { NguiAutoCompleteComponent } from './auto-complete.component';
-import { AutoCompleteFilter } from './model/auto-complete.filter';
-import { NguiAutoCompleteNoMatchFoundMessage } from './model/no-match-found-message.model';
+import { AutoCompleteFilter } from './model';
+import { NguiAutoCompleteNoMatchFoundMessage } from './model';
 
 @Directive({
   // tslint:disable-next-line:directive-selector
@@ -57,7 +57,8 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
   @Input('extFormControl') public extFormControl: AbstractControl;
   @Input('z-index') public zIndex = '1';
   @Input('is-rtl') public isRtl = false;
-  @Input('hide-on-no-match-found') public hideOnNoMatchFound: boolean = false;
+  @Input('hide-on-no-match-found') public hideOnNoMatchFound = false;
+  @Input('in-use-item-label') public inUseItemLabel;
 
   @Input('no-match-found-text')
   public set noMatchFoundText(noMatchFoundMessage: string | NguiAutoCompleteNoMatchFoundMessage) {
@@ -229,6 +230,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
     component.itemHeight = this.itemHeight;
     component.triggerInputHeight = this.inputEl.getBoundingClientRect().height;
     component.maxHeightTopGap = this.maxHeightTopGap;
+    component.inUseItemLabel = this.inUseItemLabel;
 
     component.valueSelected.subscribe(this.selectNewValue);
     component.textEntered.subscribe(this.enterNewText);

@@ -63,7 +63,7 @@ export class ComponentTestComponent implements OnInit {
 
   public removeFromAddrs(evt, index: number): void {
     this.addrs.splice(index, 1);
-    event.stopPropagation();
+    evt.stopPropagation();
   }
 
   public myListFormatter(data: any): string {
