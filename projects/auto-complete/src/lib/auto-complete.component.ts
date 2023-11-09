@@ -11,8 +11,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { NguiAutoComplete } from './auto-complete.service';
-import { AutoCompleteFilter } from './model/auto-complete.filter';
-import { NguiAutoCompleteNoMatchFoundMessage } from './model/no-match-found-message.model';
+import { AutoCompleteFilter } from './model';
+import { NguiAutoCompleteNoMatchFoundMessage } from './model';
 
 @Component({
   selector: 'ngui-auto-complete',
@@ -67,6 +67,8 @@ import { NguiAutoCompleteNoMatchFoundMessage } from './model/no-match-found-mess
             *ngFor="let item of filteredList; let i=index; trackBy: trackByIndex"
             (mousedown)="selectOne(item)"
             [ngClass]="{selected: i + filters.length === itemIndex}"
+            [class.in-use]="!!item.inUse"
+            [attr.data-after]="item.inUse ? inUseItemLabel : null"
             [innerHtml]="autoComplete.getFormattedListItem(item)">
         </li>
       </ul>
@@ -168,7 +170,8 @@ export class NguiAutoCompleteComponent implements OnInit {
   @Input('ignore-accents') public ignoreAccents = true;
   @Input('filters') public filters: AutoCompleteFilter[] = [];
 
-  @Input('hide-on-no-match-found') public hideOnNoMatchFound: boolean = false;
+  @Input('hide-on-no-match-found') public hideOnNoMatchFound = false;
+  @Input('in-use-item-label') public inUseItemLabel;
   @Input('no-match-found-text')
   public set noMatchFoundText(noMatchFoundMessage: string | NguiAutoCompleteNoMatchFoundMessage) {
     if (typeof noMatchFoundMessage === 'string') {
@@ -199,9 +202,9 @@ export class NguiAutoCompleteComponent implements OnInit {
   public itemIndex: number = null;
   public keyword: string;
   // (changes below were added by Leo Diaz)
-  public itemHeight: number = 0;
-  public triggerInputHeight: number = 0;
-  public maxHeightTopGap: number = 0;
+  public itemHeight = 0;
+  public triggerInputHeight = 0;
+  public maxHeightTopGap = 0;
 
   private el: HTMLElement;           // this component  element `<ngui-auto-complete>`
   private timer = 0;
